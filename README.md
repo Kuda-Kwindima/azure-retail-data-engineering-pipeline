@@ -4,30 +4,32 @@ This project builds an end-to-end data engineering pipeline that transforms the 
 
 The pipeline loads raw CSV data, cleans and models it, and produces analytics-ready data marts for business insights.
 
-## Architecture
+
+## Pipeline Architecture
 
 The warehouse follows a layered architecture:
 
-Instacart CSV Data
-        │
-        ▼
-Python ingestion (src/load_raw.py)
-        │
-        ▼
-PostgreSQL RAW layer
-        │
-        ▼
-STAGING transformations
-        │
-        ▼
-WAREHOUSE dimensional model
-        │
-        ▼
-DATA MARTS for analytics
-        │
-        ▼
-Prefect orchestration flow
+```mermaid
+flowchart TD
 
+A[Instacart CSV Files] --> B[Python Ingestion<br>src/load_raw.py]
+
+B --> C[PostgreSQL RAW Layer]
+
+C --> D[STAGING Transformations]
+
+D --> E[WAREHOUSE Dimensional Model]
+
+E --> F[DATA MARTS]
+
+F --> G[Analytics Queries]
+
+subgraph Orchestration
+H[Prefect Flow]
+end
+
+H --> B
+```
 
 ## Technologies
 
