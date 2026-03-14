@@ -8,28 +8,82 @@ The pipeline loads raw CSV data, cleans and models it, and produces analytics-re
 
 The warehouse follows a layered architecture:
 
-Raw → Staging → Warehouse → Data Marts
+Instacart CSV Data
+        │
+        ▼
+Python ingestion (src/load_raw.py)
+        │
+        ▼
+PostgreSQL RAW layer
+        │
+        ▼
+STAGING transformations
+        │
+        ▼
+WAREHOUSE dimensional model
+        │
+        ▼
+DATA MARTS for analytics
+        │
+        ▼
+Prefect orchestration flow
 
-Raw layer  
-Stores the original source data exactly as received.
-
-Staging layer  
-Applies data cleaning and standardization.
-
-Warehouse layer  
-Builds dimensional models including fact and dimension tables.
-
-Data marts  
-Aggregated tables designed for analytics and reporting.
 
 ## Technologies
 
-Python  
-SQL  
-PostgreSQL  
-Prefect (pipeline orchestration)  
-Pandas  
+Python
+PostgreSQL
 SQLAlchemy
+Prefect
+Pandas
+Dimensional Data Modeling
+
+## Project Structure
+
+```text
+config/
+data/
+flows/
+sql/
+    raw/
+    staging/
+    warehouse/
+    marts/
+src/
+tests/
+README.md
+requirements.txt
+```
+---
+
+## Data Model
+
+### RAW
+- raw_orders
+- raw_products
+- raw_aisles
+- raw_departments
+- raw_order_products_prior
+- raw_order_products_train
+
+### STAGING
+- stg_orders
+- stg_products
+- stg_order_items
+
+### WAREHOUSE
+- dim_orders
+- dim_products
+- dim_aisles
+- dim_departments
+- fact_order_items
+
+### MARTS
+- mart_product_reorders
+- mart_customer_orders
+- mart_department_trends
+
+---
 
 ## Pipeline Steps
 
@@ -39,11 +93,15 @@ SQLAlchemy
 4. Build dimensional warehouse tables
 5. Generate analytics marts
 
+---
+
 ## Dataset
 
 Instacart Online Grocery Shopping Dataset 2017
 
 https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis
+
+---
 
 ## Example Analytics
 
@@ -53,6 +111,28 @@ The warehouse enables analysis such as:
 - customer ordering behavior
 - department purchasing trends
 - shopping patterns by day and hour
+
+---
+
+## Running the Pipeline
+
+1. Install dependencies
+
+```
+pip install -r requirements.txt
+```
+
+2. Configure database credentials
+
+```
+Create a `.env` file using `.env.example`.
+```
+
+3. Run the pipeline
+
+```
+python flows/instacart_flow.py
+```
 
 ## Future Improvements
 
