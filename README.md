@@ -37,8 +37,18 @@ H --> B
 - PostgreSQL
 - SQLAlchemy
 - Prefect
+- Docker
 - Pandas
-- Dimensional Data Modeling
+- Dimensional Modeling
+
+### Examples of business questions answered:
+
+- Which products have the highest reorder probability?
+- What time of day do customers shop most?
+- Which departments drive the most repeat purchases?
+
+
+
 
 ## Project Structure
 
@@ -112,6 +122,12 @@ dim_products }o--|| dim_departments : department_id
 4. Build dimensional warehouse tables
 5. Generate analytics marts
 
+## Pipeline scale
+
+```
+Processes 30M+ order-item records into a dimensional warehouse.
+```
+
 ---
 
 ## Dataset
@@ -165,9 +181,17 @@ The pipeline is orchestrated using Prefect, allowing monitoring of flow runs and
 
 ![Prefect Dashboard](docs/prefect_dashboard.png)
 
+## Docker Pipeline Execution
+
+The pipeline runs in Docker containers for reproducible local execution.
+
+- PostgreSQL warehouse container
+- Pipeline execution container
+
+![Docker Pipeline](docs/docker_pipeline.png)
+
 ## Future Improvements
 
-- Docker containerization
 - Airflow orchestration
 - Cloud deployment (Azure)
 - Dashboard layer (Power BI / Metabase)
