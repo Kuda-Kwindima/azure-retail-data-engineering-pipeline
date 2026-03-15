@@ -152,6 +152,18 @@ Create a `.env` file using `.env.example`.
 ```
 python flows/instacart_flow.py
 ```
+4. Using Make
+
+```
+make install
+make run
+```
+
+## Pipeline Orchestration
+
+The pipeline is orchestrated using Prefect, allowing monitoring of flow runs and task execution.
+
+![Prefect Dashboard](docs/prefect_dashboard.png)
 
 ## Future Improvements
 
