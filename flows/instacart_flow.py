@@ -70,4 +70,4 @@ def instacart_etl_flow():
 
 
 if __name__ == "__main__":
-    instacart_pipeline()
+    instacart_etl_flow()
