@@ -24,5 +24,11 @@ class ADLSClient:
 
         buffer = StringIO()
         df.to_csv(buffer, index=False)
+        data = buffer.getvalue().encode("utf-8")
 
-        blob_client.upload_blob(buffer.getvalue(), overwrite=True)
+        blob_client.upload_blob(
+            data,
+            overwrite=True,
+            timeout=300,
+            max_concurrency=2,
+        )

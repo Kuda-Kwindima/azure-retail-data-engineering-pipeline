@@ -1,3 +1,4 @@
+import pandas as pd
 import os
 from dotenv import load_dotenv
 from src.storage.adls_client import ADLSClient
@@ -136,6 +137,7 @@ def build_mart_product_reorders(client: ADLSClient) -> None:
     )
     dim_products = client.read_csv("warehouse/dim_products/dim_products.csv")
 
+    # --- aggregate ---
     mart_product_reorders = (
         fact_order_items.groupby("product_id")
         .agg(
@@ -145,20 +147,39 @@ def build_mart_product_reorders(client: ADLSClient) -> None:
         .reset_index()
     )
 
+    # --- ensure numeric FIRST ---
+    mart_product_reorders["total_orders"] = pd.to_numeric(
+        mart_product_reorders["total_orders"], errors="coerce"
+    )
+
+    mart_product_reorders["reorder_count"] = pd.to_numeric(
+        mart_product_reorders["reorder_count"], errors="coerce"
+    )
+
+    # --- calculate reorder_rate ---
     mart_product_reorders["reorder_rate"] = (
-        mart_product_reorders["reorder_count"] / mart_product_reorders["total_orders"]
+        mart_product_reorders["reorder_count"] /
+        mart_product_reorders["total_orders"]
     )
 
+    mart_product_reorders["reorder_rate"] = pd.to_numeric(
+        mart_product_reorders["reorder_rate"], errors="coerce"
+    )
+
+    # --- calculate score (ONLY ONCE) ---
     mart_product_reorders["score"] = (
-    mart_product_reorders["total_orders"] * mart_product_reorders["reorder_rate"]
-    )
+        mart_product_reorders["total_orders"] *
+        mart_product_reorders["reorder_rate"]
+    ).fillna(0)
 
+    # --- merge product names ---
     mart_product_reorders = mart_product_reorders.merge(
         dim_products[["product_id", "product_name"]],
         on="product_id",
         how="left",
     )
 
+    # --- final columns ---
     mart_product_reorders = mart_product_reorders[
         [
             "product_id",
@@ -170,11 +191,13 @@ def build_mart_product_reorders(client: ADLSClient) -> None:
         ]
     ].sort_values("score", ascending=False)
 
+    # --- write ---
     client.write_csv(
         mart_product_reorders,
         "analytics/mart_product_reorders/mart_product_reorders.csv",
     )
-    print("mart_product_reorders built:", mart_product_reorders.shape)   
+
+    print("mart_product_reorders built:", mart_product_reorders.shape)  
 
 def build_mart_department_reorders(client: ADLSClient) -> None:
     fact_order_items = client.read_csv(
