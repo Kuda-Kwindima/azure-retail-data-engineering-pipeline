@@ -1,6 +1,10 @@
 # Instacart Retail Analytics Warehouse Pipeline
 
-This project builds an end-to-end data engineering pipeline that transforms the Instacart dataset into an analytics-ready data platform.
+This project builds an end-to-end data engineering system that transforms raw retail transaction data into a structured analytics platform for business insights.
+
+The pipeline processes 33M+ records and enables analysis of product demand, reorder behavior, and department performance to support data-driven retail decision-making.
+
+It combines data engineering (pipeline, warehouse, orchestration) with analytics (metrics, dashboards) to demonstrate how raw data becomes actionable insights.
 
 It includes two implementations:
 
@@ -43,6 +47,17 @@ end
 
 H --> B
 ```
+
+The final output of the pipeline is an analytics-ready dataset consumed in Power BI.
+
+The dashboard provides:
+
+- High-level KPIs (total products, total orders, reorder rate)
+- Top-performing products based on demand and reorder behavior
+- Department-level performance analysis
+
+This bridges the gap between data engineering and business decision-making.
+
 ## ⚡ Azure Data Lake Pipeline
 
 This project also includes a cloud-native data pipeline built on Azure Blob Storage.
@@ -75,11 +90,14 @@ This complements the PostgreSQL pipeline by showing both database-driven and dat
 - Azure Blob Storage (Data Lake)
 - Pandas-based transformations (warehouse layer)
 
-### Examples of business questions answered:
+The analytics layer enables insights such as:
 
-- Which products have the highest reorder probability?
-- What time of day do customers shop most?
-- Which departments drive the most repeat purchases?
+- High-frequency products (e.g., bananas, organic produce) dominate demand
+- Produce is the highest-performing department by total orders
+- Reorder behavior highlights strong customer loyalty in perishable goods
+- Demand patterns are driven by frequently purchased everyday items
+
+These insights can support decisions around inventory planning, promotions, and category management.
 
 
 ## Project Structure
@@ -145,6 +163,12 @@ dim_products }o--|| dim_aisles : aisle_id
 dim_products }o--|| dim_departments : department_id
 ```
 ---
+
+## Key Metrics
+
+- Total Orders
+- Reorder Rate
+- Product Score = total_orders × reorder_rate
 
 ## Pipeline Steps
 
@@ -219,7 +243,7 @@ The pipeline runs in Docker containers for reproducible local execution.
 
 ## Future Improvements
 
-- Power BI dashboards for business visualization
+- Expand Power BI dashboards with customer-level and time-based analysis
 - Load Azure warehouse into PostgreSQL / Azure SQL
 - Implement data quality checks
 - Add monitoring and alerting
