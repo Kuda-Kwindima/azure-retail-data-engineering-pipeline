@@ -13,6 +13,22 @@ It includes two implementations:
 
 Both pipelines follow a layered architecture and produce structured data models and analytics-ready marts for business insights.
 
+## Business Problem
+
+Retail companies need to understand:
+
+- Which products drive repeat purchases
+- Which departments generate the most revenue
+- How customer behavior impacts inventory planning
+
+Without structured data, this information is difficult to extract from raw transactional data.
+
+This project solves that by transforming raw order-level data into a structured analytics system that enables decision-making around:
+
+- Inventory optimization
+- Product performance tracking
+- Customer purchasing behavior
+
 ## Key Features
 
 - End-to-end data engineering pipeline for the Instacart Online Grocery Shopping dataset
@@ -57,6 +73,27 @@ The dashboard provides:
 - Department-level performance analysis
 
 This bridges the gap between data engineering and business decision-making.
+
+## Dashboard
+
+The Power BI dashboard provides a business-facing analytics layer built on top of the warehouse.
+
+Key capabilities:
+
+- Identify top-performing products based on demand and reorder behavior
+- Analyze department performance by total orders and reorder rate
+- Explore product-level metrics through an interactive table
+- Filter insights dynamically using department slicers
+
+This allows stakeholders to quickly answer:
+
+- Which products drive repeat purchases?
+- Which departments show strong customer loyalty?
+- Where should inventory focus be increased or reduced?
+
+## Dashboard Preview
+
+![Dashboard](docs/dashboard.png)
 
 ## ⚡ Azure Data Lake Pipeline
 
@@ -168,7 +205,7 @@ dim_products }o--|| dim_departments : department_id
 
 - Total Orders
 - Reorder Rate
-- Product Score = total_orders × reorder_rate
+- Product Score = total_orders × reorder_rate (used to rank high-demand, high-loyalty products)
 
 ## Pipeline Steps
 
@@ -182,6 +219,7 @@ dim_products }o--|| dim_departments : department_id
 ---
 
 ## Dataset
+The dataset contains anonymized customer orders, products, aisles, and departments, enabling analysis of purchasing patterns at scale.
 
 Instacart Online Grocery Shopping Dataset 2017
 
@@ -240,6 +278,18 @@ The pipeline runs in Docker containers for reproducible local execution.
 - Pipeline execution container
 
 ![Docker Pipeline](docs/docker_pipeline.png)
+
+## Learnings
+
+This project demonstrates:
+
+- Building a layered data architecture (raw → staging → warehouse → marts)
+- Designing dimensional models for analytics
+- Creating business metrics using SQL and Power BI (DAX)
+- Orchestrating pipelines using Prefect
+- Structuring reproducible environments using Docker
+
+It highlights how data engineering systems support real-world business decision-making.
 
 ## Future Improvements
 
