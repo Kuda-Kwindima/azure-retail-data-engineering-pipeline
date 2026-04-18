@@ -1,0 +1,11 @@
+﻿product_id,product_name,aisle,department,total_order_lines,reordered_lines,reorder_rate
+24852,Banana,fresh fruits,produce,491291,415166,0.8451
+13176,Bag of Organic Bananas,fresh fruits,produce,394930,329275,0.8338
+21137,Organic Strawberries,fresh fruits,produce,275577,214448,0.7782
+21903,Organic Baby Spinach,packaged vegetables fruits,produce,251705,194939,0.7745
+47209,Organic Hass Avocado,fresh fruits,produce,220877,176173,0.7976
+47766,Organic Avocado,fresh fruits,produce,184224,140270,0.7614
+47626,Large Lemon,fresh fruits,produce,160792,112178,0.6977
+16797,Strawberries,fresh fruits,produce,149445,104588,0.6998
+26209,Limes,fresh fruits,produce,146660,100002,0.6819
+27845,Organic Whole Milk,milk,dairy eggs,142813,118684,0.8310

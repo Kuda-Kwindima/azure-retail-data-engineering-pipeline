@@ -1,0 +1,11 @@
+﻿product_id,product_name,aisle,department,total_order_lines,reordered_lines,reorder_rate
+9292,Half And Half Ultra Pasteurized,milk,dairy eggs,2995,2580,0.8614
+45504,Whole Organic Omega 3 Milk,milk,dairy eggs,9410,8091,0.8598
+43394,Organic Lactose Free Whole Milk,soy lactosefree,dairy eggs,8742,7511,0.8592
+5514,Organic Homogenized Whole Milk,milk,dairy eggs,4095,3514,0.8581
+47231,Ultra-Purified Water,water seltzer sparkling water,beverages,1524,1306,0.8570
+29447,Milk  Organic  Vitamin D,milk,dairy eggs,20770,17753,0.8547
+38689,Organic Reduced Fat Milk,milk,dairy eggs,36869,31394,0.8515
+34197,Goat Milk,milk,dairy eggs,5353,4551,0.8502
+24852,Banana,fresh fruits,produce,491291,415166,0.8451
+39180,Organic Lowfat 1% Milk,milk,dairy eggs,15352,12914,0.8412

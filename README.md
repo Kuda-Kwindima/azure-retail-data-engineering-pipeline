@@ -1,8 +1,13 @@
-# Instacart Retail Analytics Warehouse Pipeline
+# Instacart Retail Analytics Pipeline (Azure + SQL + Power BI)
 
-This project builds an end-to-end data engineering system that transforms raw retail transaction data into a structured analytics platform for business insights.
+This project builds a cloud-based retail analytics pipeline on Azure to analyze customer purchasing and reorder behavior.
 
-The pipeline processes 33M+ records and enables analysis of product demand, reorder behavior, and department performance to support data-driven retail decision-making.
+The goal is to identify:
+- Which products drive demand
+- Which products drive customer loyalty
+- How reorder behavior differs across departments
+
+The pipeline processes 33M+ records and transforms raw transactional data into business-ready insights through a structured data warehouse and Power BI dashboard.
 
 It combines data engineering (pipeline, warehouse, orchestration) with analytics (metrics, dashboards) to demonstrate how raw data becomes actionable insights.
 
@@ -12,6 +17,19 @@ It includes two implementations:
 - A cloud-based Azure Data Lake pipeline (Python + storage-driven)
 
 Both pipelines follow a layered architecture and produce structured data models and analytics-ready marts for business insights.
+
+The final output is an interactive Power BI dashboard that enables business users to analyze demand vs customer loyalty across products and departments.
+
+## 🚀 Azure Analytics Pipeline
+
+This project includes a cloud-based implementation using:
+
+- Azure Data Lake (storage)
+- Azure Data Factory (ingestion)
+- Azure SQL Database (warehouse)
+- Power BI (analytics dashboard)
+
+This version focuses on analyzing customer reorder behavior and product performance.
 
 ## Business Problem
 
@@ -40,7 +58,7 @@ This project solves that by transforming raw order-level data into a structured 
 
 ## Pipeline Architecture
 
-The pipeline ingests raw Instacart CSV files, loads them into a PostgreSQL warehouse, and transforms them through layered schemas (raw → staging → warehouse → marts) orchestrated with Prefect.
+The pipeline ingests raw Instacart CSV files and transforms them into structured analytics models across both local (PostgreSQL) and cloud (Azure) environments.
 
 ```mermaid
 flowchart TD
@@ -74,7 +92,7 @@ The dashboard provides:
 
 This bridges the gap between data engineering and business decision-making.
 
-## Dashboard
+## 📊 Power BI Dashboard
 
 The Power BI dashboard provides a business-facing analytics layer built on top of the warehouse.
 
@@ -91,9 +109,19 @@ This allows stakeholders to quickly answer:
 - Which departments show strong customer loyalty?
 - Where should inventory focus be increased or reduced?
 
-## Dashboard Preview
+![Dashboard](docs/powerbi_dashboard.png)
 
-![Dashboard](docs/dashboard.png)
+## 📈 Key Insights
+
+- Overall reorder rate is ~59%, indicating strong repeat purchase behavior across the platform
+
+- High-volume products (e.g., bananas, produce) dominate total demand, driven by frequent consumption
+
+- High reorder-rate products differ from high-volume products, highlighting strong loyalty in staple goods such as dairy and beverages
+
+- Produce drives volume, while categories like dairy eggs and beverages drive repeat purchases
+
+- This shows that demand and customer retention are not always aligned, which has implications for inventory and promotion strategy
 
 ## ⚡ Azure Data Lake Pipeline
 
@@ -109,33 +137,28 @@ Key capabilities:
 - Analytics marts generation
 - Orchestration using Prefect with retry logic
 
-Architecture:
+## ☁️ Azure Architecture
 
-Raw (Azure) → Processed → Warehouse → Marts
+Raw CSV → Azure Data Lake → Azure Data Factory → Azure SQL → Power BI
 
-This complements the PostgreSQL pipeline by showing both database-driven and data lake-based architectures.
+This architecture reflects a modern cloud data engineering workflow used in real-world retail analytics environments.
 
 ## Technologies
 
-- Python
+### Data Engineering
+- Azure Data Factory
+- Azure Data Lake Gen2
+- Azure SQL Database
 - PostgreSQL
-- SQLAlchemy
 - Prefect
-- Docker
-- Pandas
-- Dimensional Modeling
-- Azure Blob Storage (Data Lake)
-- Pandas-based transformations (warehouse layer)
 
-The analytics layer enables insights such as:
+### Analytics
+- Power BI
+- DAX
 
-- High-frequency products (e.g., bananas, organic produce) dominate demand
-- Produce is the highest-performing department by total orders
-- Reorder behavior highlights strong customer loyalty in perishable goods
-- Demand patterns are driven by frequently purchased everyday items
-
-These insights can support decisions around inventory planning, promotions, and category management.
-
+### Processing
+- Python (Pandas)
+- SQL
 
 ## Project Structure
 
