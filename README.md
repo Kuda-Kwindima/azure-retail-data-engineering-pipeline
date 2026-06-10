@@ -42,6 +42,27 @@ This project includes a cloud-based implementation using:
 
 This version focuses on analyzing customer reorder behavior and product performance.
 
+## Project Status
+
+The cloud implementation was successfully deployed and tested on Azure using:
+
+- Azure Data Lake Gen2
+- Azure Data Factory
+- Azure SQL Database
+- Power BI
+
+Azure resources were later decommissioned after the available Azure credits expired.
+
+The project remains fully reproducible through:
+
+- source code
+- SQL scripts
+- architecture documentation
+- deployment screenshots
+- local PostgreSQL + Prefect implementation
+
+This reflects a real-world development workflow where solutions are built, tested, validated, and documented before infrastructure is retired.
+
 ## Business Problem
 
 Retail companies need to understand:
@@ -189,6 +210,19 @@ Example outcomes:
 - No orphan records detected in fact → dimension joins
 - No duplicate product_id values found
 
+## Warehouse Statistics
+
+The warehouse processes over 33 million order item records and includes the following core entities:
+
+| Table | Rows |
+|---------|---------:|
+| Products | 49,688 |
+| Aisles | 134 |
+| Departments | 21 |
+| Order Items | 33M+ |
+
+These tables form the foundation of the dimensional warehouse and analytics marts used by Power BI.
+
 ## 📊 Power BI Dashboard
 
 The Power BI dashboard provides a business-facing analytics layer built on top of the warehouse.
@@ -224,6 +258,18 @@ This allows stakeholders to quickly answer:
   - high-volume items (availability focus)
   - high-loyalty items (retention and promotion focus)
 
+  ## Business Value
+
+This pipeline enables retailers to:
+
+- identify products that drive customer loyalty
+- distinguish between demand and retention metrics
+- optimize inventory planning based on reorder behavior
+- improve product assortment decisions
+- support data-driven merchandising strategies
+
+The analytics warehouse converts raw transactional data into actionable business insights for operational and strategic decision-making.
+
 ## ⚡ Cloud Implementation (Azure)
 
 The pipeline is deployed on Azure to simulate a production-grade data platform:
@@ -235,20 +281,31 @@ The pipeline is deployed on Azure to simulate a production-grade data platform:
 
 ## Technologies
 
+## Technologies
+
 ### Data Engineering
+
 - Azure Data Factory
 - Azure Data Lake Gen2
 - Azure SQL Database
 - PostgreSQL
 - Prefect
+- Docker
 
 ### Analytics
+
 - Power BI
 - DAX
 
 ### Processing
+
 - Python (Pandas)
 - SQL
+
+### Version Control
+
+- Git
+- GitHub
 
 ## Project Structure
 
@@ -388,7 +445,50 @@ make run
 
 The pipeline is orchestrated using Prefect, allowing monitoring of flow runs and task execution.
 
+## Screenshots
+
+### End-to-End Azure Data Factory Pipeline
+
+Azure Data Factory orchestrates the full workflow from staging to warehouse and marts.
+
+![ADF End-to-End Pipeline](docs/adf_end_to_end_pipeline.png)
+
+### Staging Pipeline
+
+The staging pipeline loads Instacart source datasets into Azure SQL staging tables.
+
+![ADF Staging Pipeline](docs/adf_staging_pipeline.png)
+
+### Data Ingestion Copy Activity
+
+ADF Copy Activities ingest source files into Azure SQL tables.
+
+![ADF Copy Activity](docs/adf_copy_activity.png)
+
+### Azure SQL Warehouse Build
+
+The warehouse build pipeline creates dimension and fact tables using SQL scripts.
+
+![ADF Warehouse Pipeline](docs/adf_warehouse_pipeline.png)
+
+### Power BI Dashboard
+
+The Power BI dashboard presents reorder behavior, product performance, and department-level insights.
+
+![Power BI Dashboard](docs/powerbi_dashboard.png)
+
+### Prefect Orchestration
+
+Prefect was used for local pipeline orchestration and task monitoring.
+
 ![Prefect Dashboard](docs/prefect_dashboard.png)
+
+### Dockerized Local Environment
+
+Docker provides a reproducible local environment with PostgreSQL and the pipeline container.
+
+![Docker Pipeline](docs/docker_pipeline.png)
+
 
 ## Docker Pipeline Execution
 
@@ -397,7 +497,6 @@ The pipeline runs in Docker containers for reproducible local execution.
 - PostgreSQL warehouse container
 - Pipeline execution container
 
-![Docker Pipeline](docs/docker_pipeline.png)
 
 ## Learnings
 
